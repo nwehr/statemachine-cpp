@@ -3,41 +3,45 @@
 
 #include "./StateMachine/StateMachine.h"
 
-const vector<StateMachine::StatePtr> states() {
-    auto s1 = StateMachine::StatePtr(new StateMachine::State(1, "Start"));
-    auto s2 = StateMachine::StatePtr(new StateMachine::State(2, "End"));
+using namespace StateMachine;
 
-    return vector<StateMachine::StatePtr>{s1, s2};
+const vector<StatePtr> states() {
+    auto s1 = StatePtr(new State(1, "Start"));
+    auto s2 = StatePtr(new State(2, "End"));
+
+    return vector<StatePtr>{s1, s2};
 }
 
-const vector<StateMachine::TransitionPtr> transitions() {
-    auto t1 = StateMachine::TransitionPtr(new StateMachine::Transition(1, "Complete", [](StateMachine::Args& args) -> const StateMachine::TransitionResult {
-        return StateMachine::TransitionResult(true);
+const vector<TransitionPtr> transitions() {
+    auto t1 = TransitionPtr(new Transition(1, "Complete", [](Args& args) -> const TransitionResult {
+        return TransitionResult(true);
     }));
 
-    return vector<StateMachine::TransitionPtr>{t1};
+    return vector<TransitionPtr>{t1};
 }
 
-const StateMachine::StateMachine load() {
+const ::StateMachine::StateMachine load() {
+    // simulate loading states and transitions concurrently from a database
     auto futureStates = async(launch::async, states);
     auto futureTransitions = async(launch::async, transitions);
 
+    // block until our concurrent fetching tasks are complete
     auto states = futureStates.get();
     auto transitions = futureTransitions.get();
 
-    transitions.front()->destination = states[1];
+    transitions[0]->destination = states[1];
 
-    states.front()->transitions.push_back(transitions.front());
+    states[0]->transitions.push_back(transitions[0]);
 
-   return StateMachine::StateMachine(1, "Main", StateMachine::Args(), states.front());
+   return ::StateMachine::StateMachine(1, "Main", Args(), states.front());
 }
 
 int main(int argc, char *argv[]) {
-    auto sm = load();
+    auto stateMachine = load();
 
-    cout << sm.state->name << endl;
+    cout << stateMachine.state->name << endl;
 
-    sm.next(sm.state->transitions.front());
+    stateMachine.next(stateMachine.state->transitions.front());
 
-    cout << sm.state->name << endl;
+    cout << stateMachine.state->name << endl;
 }
