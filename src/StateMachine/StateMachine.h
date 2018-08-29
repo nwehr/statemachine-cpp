@@ -12,22 +12,22 @@ namespace StateMachine {
     ////////////////////////////////////////////
     class StateMachine : public Unique {
     public:
-        map<string, any> args;
-        shared_ptr<State> state;
+        Args args;
+        StatePtr state;
 
-        StateMachine(const unsigned int id, const string& name, const map<string, any>& args, const shared_ptr<State>& state = nullptr);
+        StateMachine(const unsigned int id, const string& name, const Args& args, const StatePtr& state = nullptr);
 
-        void next(shared_ptr<Transition> transition);
+        void next(TransitionPtr transition);
     };
 }
 
-StateMachine::StateMachine::StateMachine(const unsigned int id, const string& name, const map<string, any>& args, const shared_ptr<State>& state)
+StateMachine::StateMachine::StateMachine(const unsigned int id, const string& name, const Args& args, const StatePtr& state)
 : StateMachine::Unique(id, name)
 , args(args)
 , state(state)
 {}
 
-void StateMachine::StateMachine::next(shared_ptr<Transition> transition) {
+void StateMachine::StateMachine::next(TransitionPtr transition) {
     auto result = transition->handler(args);
 
     if(!result.ok){

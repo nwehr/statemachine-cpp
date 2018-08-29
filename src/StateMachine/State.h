@@ -11,18 +11,20 @@ using namespace std;
 namespace StateMachine {
     class Transition;
 
+    typedef shared_ptr<Transition> TransitionPtr;
+
     ////////////////////////////////////////////
     // State
     ////////////////////////////////////////////
     class State : public Unique {
     public:
-        vector<shared_ptr<Transition>> transitions;
+        vector<TransitionPtr> transitions;
 
-        State(const unsigned int id, const string& name, const vector<shared_ptr<Transition>>& transitions = {});
+        State(const unsigned int id, const string& name, const vector<TransitionPtr>& transitions = {});
     };
 }
 
-StateMachine::State::State(const unsigned int id, const string& name, const vector<shared_ptr<Transition>>& transitions)
+StateMachine::State::State(const unsigned int id, const string& name, const vector<TransitionPtr>& transitions)
 : StateMachine::Unique(id, name)
 , transitions(transitions)
 {}

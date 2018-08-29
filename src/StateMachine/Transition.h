@@ -20,18 +20,20 @@ namespace StateMachine {
 
         TransitionResult(const bool ok, const string& msg = "");
     };
-
-    typedef std::function<const TransitionResult (map<string, any>&)> HandlerT;
+    
+    typedef shared_ptr<State> StatePtr;
+    typedef map<string, any> Args;
+    typedef std::function<const TransitionResult (Args&)> Handler;
 
     ////////////////////////////////////////////
     // Transition
     ////////////////////////////////////////////
     class Transition : public Unique {
     public:
-        HandlerT handler;
-        shared_ptr<State> destination;
+        Handler handler;
+        StatePtr destination;
         
-        Transition(const unsigned int id, const string& name, const HandlerT& handler, const shared_ptr<State>& destination = nullptr);
+        Transition(const unsigned int id, const string& name, const Handler& handler, const StatePtr& destination = nullptr);
     };
 }
 
@@ -40,7 +42,7 @@ StateMachine::TransitionResult::TransitionResult(const bool ok, const string& ms
 , msg(msg)
 {}
 
-StateMachine::Transition::Transition(const unsigned int id, const string& name, const HandlerT& handler, const shared_ptr<State>& destination)
+StateMachine::Transition::Transition(const unsigned int id, const string& name, const Handler& handler, const StatePtr& destination)
 : StateMachine::Unique(id, name)
 , handler(handler)
 , destination(destination) 
