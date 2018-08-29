@@ -6,16 +6,18 @@
 using namespace StateMachine;
 
 const vector<StatePtr> states() {
-    auto s1 = StatePtr(new State(1, "Start"));
-    auto s2 = StatePtr(new State(2, "End"));
+    StatePtr s1(new State(1, "Start"));
+    StatePtr s2(new State(2, "End"));
 
     return vector<StatePtr>{s1, s2};
 }
 
 const vector<TransitionPtr> transitions() {
-    auto t1 = TransitionPtr(new Transition(1, "Complete", [](Args& args) -> const TransitionResult {
+    auto handler = [](Args& args) -> const TransitionResult {
         return TransitionResult(true);
-    }));
+    };
+
+    TransitionPtr t1(new Transition(1, "Complete", handler));
 
     return vector<TransitionPtr>{t1};
 }
@@ -36,7 +38,7 @@ const ::StateMachine::StateMachine load() {
    return ::StateMachine::StateMachine(1, "Main", Args(), states.front());
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
     auto stateMachine = load();
 
     cout << stateMachine.state->name << endl;
