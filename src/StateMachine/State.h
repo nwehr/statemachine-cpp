@@ -10,14 +10,16 @@ using namespace std;
 namespace StateMachine {
     class Transition;
 
+    typedef shared_ptr<Transition> TransitionPtr;
+
     ////////////////////////////////////////////
     // State
     ////////////////////////////////////////////
     class State {
     public:
-        vector<shared_ptr<Transition>> transitions;
+        vector<TransitionPtr> transitions;
 
-        State(const vector<shared_ptr<Transition>>& transitions = {})
+        State(const vector<TransitionPtr>& transitions = {})
         : transitions(transitions)
         {}
 

@@ -13,16 +13,16 @@ namespace StateMachine {
     class StateMachine {
     public:
         Args args;
-        shared_ptr<State> state;
+        StatePtr state;
 
-        StateMachine(const Args& args, const shared_ptr<State>& state = nullptr)
+        StateMachine(const Args& args, const StatePtr& state = nullptr)
         : args(args)
         , state(state)
         {}
 
         virtual ~StateMachine() {}
 
-        void next(shared_ptr<Transition> transition) {
+        void next(const TransitionPtr& transition) {
             auto result = transition->handler(args);
 
             if(!result.ok){

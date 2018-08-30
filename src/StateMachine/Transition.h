@@ -25,6 +25,7 @@ namespace StateMachine {
 
     typedef map<string, any> Args;
     typedef std::function<const TransitionResult (Args&)> Handler;
+    typedef shared_ptr<State> StatePtr;
 
     ////////////////////////////////////////////
     // Transition
@@ -32,9 +33,9 @@ namespace StateMachine {
     class Transition {
     public:
         Handler handler;
-        shared_ptr<State> destination;
+        StatePtr destination;
         
-        Transition(const Handler& handler, const shared_ptr<State>& destination = nullptr)
+        Transition(const Handler& handler, const StatePtr& destination = nullptr)
         : handler(handler)
         , destination(destination) 
         {}

@@ -9,7 +9,7 @@ namespace StateMachine {
     ////////////////////////////////////////////
     class UniqueTransition : public Unique, public Transition {
     public:
-        UniqueTransition(unsigned int id, const string& name, const Handler& handler, const shared_ptr<State>& destination = nullptr)
+        UniqueTransition(unsigned int id, const string& name, const Handler& handler, const StatePtr& destination = nullptr)
         : Unique(id, name)
         , Transition(handler, destination)
         {}

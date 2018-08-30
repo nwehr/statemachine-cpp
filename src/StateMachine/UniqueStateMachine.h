@@ -9,7 +9,7 @@ namespace StateMachine {
     ////////////////////////////////////////////
     class UniqueStateMachine : public Unique, public StateMachine {
     public:
-        UniqueStateMachine(const unsigned int id, const string& name, const Args& args, const shared_ptr<State>& state = nullptr)
+        UniqueStateMachine(const unsigned int id, const string& name, const Args& args, const StatePtr& state = nullptr)
         : Unique(id, name)
         , StateMachine(args, state)
         {}

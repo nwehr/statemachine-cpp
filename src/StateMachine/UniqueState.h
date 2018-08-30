@@ -9,7 +9,7 @@ namespace StateMachine {
     ////////////////////////////////////////////
     class UniqueState : public Unique, public State {
     public:
-        UniqueState(unsigned int id, const string& name, const vector<shared_ptr<Transition>>& transitions = {})
+        UniqueState(unsigned int id, const string& name, const vector<TransitionPtr>& transitions = {})
         : Unique(id, name)
         , State(transitions)
         {}
