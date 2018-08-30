@@ -13,11 +13,9 @@ namespace StateMachine {
         const unsigned int id;
         const string name;
 
-        Unique(const unsigned int id, const string& name);
+        Unique(const unsigned int id, const string& name)
+        : id(id)
+        , name(name)
+        {}
     };
 }
-
-StateMachine::Unique::Unique(const unsigned int id, const string& name)
-: id(id)
-, name(name)
-{}
