@@ -13,5 +13,7 @@ namespace StateMachine {
         : Unique(id, name)
         , State(transitions)
         {}
+
+        virtual ~UniqueState() {}
     };
 }

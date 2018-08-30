@@ -20,5 +20,7 @@ namespace StateMachine {
         State(const vector<shared_ptr<Transition>>& transitions = {})
         : transitions(transitions)
         {}
+
+        virtual ~State() {}
     };
 }

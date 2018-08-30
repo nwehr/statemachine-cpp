@@ -20,6 +20,8 @@ namespace StateMachine {
         , state(state)
         {}
 
+        virtual ~StateMachine() {}
+
         void next(shared_ptr<Transition> transition) {
             auto result = transition->handler(args);
 

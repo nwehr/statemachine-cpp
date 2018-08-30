@@ -17,5 +17,7 @@ namespace StateMachine {
         : id(id)
         , name(name)
         {}
+
+        virtual ~Unique() {}
     };
 }

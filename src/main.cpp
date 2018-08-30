@@ -39,11 +39,11 @@ const UniqueStateMachine load() {
 }
 
 int main(int argc, char* argv[]) {
-    auto stateMachine = load();
+    auto sm = load();
 
-    cout << static_cast<UniqueState*>(stateMachine.state.get())->name << endl;
+    cout << dynamic_cast<UniqueState*>(sm.state.get())->name << endl;
 
-    stateMachine.next(stateMachine.state->transitions.front()); 
+    sm.next(sm.state->transitions.front()); 
 
-    cout << static_cast<UniqueState*>(stateMachine.state.get())->name << endl;
+    cout << dynamic_cast<UniqueState*>(sm.state.get())->name << endl;
 }

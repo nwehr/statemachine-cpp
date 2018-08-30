@@ -13,5 +13,7 @@ namespace StateMachine {
         : Unique(id, name)
         , StateMachine(args, state)
         {}
+
+        virtual ~UniqueStateMachine() {}
     };
 }

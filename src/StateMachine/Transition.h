@@ -38,5 +38,7 @@ namespace StateMachine {
         : handler(handler)
         , destination(destination) 
         {}
+
+        virtual ~Transition() {}
     };
 }
