@@ -5,21 +5,21 @@
 
 using namespace StateMachine;
 
-const vector<shared_ptr<UniqueState>> states() {
-    shared_ptr<UniqueState> s1(new UniqueState(1, "Start"));
-    shared_ptr<UniqueState> s2(new UniqueState(2, "End"));
+const vector<StatePtr> states() {
+    StatePtr s1(new UniqueState(1, "Start"));
+    StatePtr s2(new UniqueState(2, "End"));
 
-    return vector<shared_ptr<UniqueState>>{s1, s2};
+    return vector<StatePtr>{s1, s2};
 }
 
-const vector<shared_ptr<UniqueTransition>> transitions() {
+const vector<TransitionPtr> transitions() {
     auto handler = [](Args& args) -> const TransitionResult {
         return TransitionResult(true);
     };
 
-    shared_ptr<UniqueTransition> t1(new UniqueTransition(1, "Complete", handler));
+    TransitionPtr t1(new UniqueTransition(1, "Complete", handler));
 
-    return vector<shared_ptr<UniqueTransition>>{t1};
+    return vector<TransitionPtr>{t1};
 }
 
 const UniqueStateMachine load() {
