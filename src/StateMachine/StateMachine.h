@@ -10,29 +10,29 @@ namespace StateMachine {
     ////////////////////////////////////////////
     // StateMachine
     ////////////////////////////////////////////
-    class StateMachine : public Unique {
+    template<class StateT, class TransitionT>
+    class StateMachine {
     public:
         Args args;
-        StatePtr state;
+        shared_ptr<StateT> state;
 
-        StateMachine(const unsigned int id, const string& name, const Args& args, const StatePtr& state = nullptr);
+        StateMachine(const Args& args, const shared_ptr<StateT>& state = nullptr)
+        : args(args)
+        , state(state)
+        {}
 
-        void next(TransitionPtr transition);
+        void next(shared_ptr<Transition> transition) {
+            auto result = transition->handler(args);
+
+            if(!result.ok){
+                cout << "Ooops!" << endl;
+            } else {
+                state = transition->destination;
+            }
+        }
     };
 }
 
-StateMachine::StateMachine::StateMachine(const unsigned int id, const string& name, const Args& args, const StatePtr& state)
-: StateMachine::Unique(id, name)
-, args(args)
-, state(state)
-{}
-
-void StateMachine::StateMachine::next(TransitionPtr transition) {
-    auto result = transition->handler(args);
-
-    if(!result.ok){
-        cout << "Ooops!" << endl;
-    } else {
-        state = transition->destination;
-    }
-}
+#include "./UniqueState.h"
+#include "./UniqueStateMachine.h"
+#include "./UniqueTransition.h"

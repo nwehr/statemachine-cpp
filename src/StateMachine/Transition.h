@@ -5,7 +5,6 @@
 #include <map>
 #include <experimental/any>
 
-#include "./Unique.h"
 #include "./Transition.h"
 
 using namespace std;
@@ -18,32 +17,26 @@ namespace StateMachine {
         const bool ok;
         const string msg;
 
-        TransitionResult(const bool ok, const string& msg = "");
+        TransitionResult(const bool ok, const string& msg = "")
+        : ok(ok) 
+        , msg(msg)
+        {}
     };
-    
-    typedef shared_ptr<State> StatePtr;
+
     typedef map<string, any> Args;
     typedef std::function<const TransitionResult (Args&)> Handler;
 
     ////////////////////////////////////////////
     // Transition
     ////////////////////////////////////////////
-    class Transition : public Unique {
+    class Transition {
     public:
         Handler handler;
-        StatePtr destination;
+        shared_ptr<State> destination;
         
-        Transition(const unsigned int id, const string& name, const Handler& handler, const StatePtr& destination = nullptr);
+        Transition(const Handler& handler, const shared_ptr<State>& destination = nullptr)
+        : handler(handler)
+        , destination(destination) 
+        {}
     };
 }
-
-StateMachine::TransitionResult::TransitionResult(const bool ok, const string& msg)
-: ok(ok) 
-, msg(msg)
-{}
-
-StateMachine::Transition::Transition(const unsigned int id, const string& name, const Handler& handler, const StatePtr& destination)
-: StateMachine::Unique(id, name)
-, handler(handler)
-, destination(destination) 
-{}

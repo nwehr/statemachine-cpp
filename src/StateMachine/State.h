@@ -3,7 +3,6 @@
 #include <memory>
 #include <vector>
 
-#include "./Unique.h"
 #include "./Transition.h"
 
 using namespace std;
@@ -11,20 +10,15 @@ using namespace std;
 namespace StateMachine {
     class Transition;
 
-    typedef shared_ptr<Transition> TransitionPtr;
-
     ////////////////////////////////////////////
     // State
     ////////////////////////////////////////////
-    class State : public Unique {
+    class State {
     public:
-        vector<TransitionPtr> transitions;
+        vector<shared_ptr<Transition>> transitions;
 
-        State(const unsigned int id, const string& name, const vector<TransitionPtr>& transitions = {});
+        State(const vector<shared_ptr<Transition>>& transitions = {})
+        : transitions(transitions)
+        {}
     };
 }
-
-StateMachine::State::State(const unsigned int id, const string& name, const vector<TransitionPtr>& transitions)
-: StateMachine::Unique(id, name)
-, transitions(transitions)
-{}
