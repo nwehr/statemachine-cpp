@@ -10,13 +10,12 @@ namespace StateMachine {
     ////////////////////////////////////////////
     // StateMachine
     ////////////////////////////////////////////
-    template<class StateT, class TransitionT>
     class StateMachine {
     public:
         Args args;
-        shared_ptr<StateT> state;
+        shared_ptr<State> state;
 
-        StateMachine(const Args& args, const shared_ptr<StateT>& state = nullptr)
+        StateMachine(const Args& args, const shared_ptr<State>& state = nullptr)
         : args(args)
         , state(state)
         {}

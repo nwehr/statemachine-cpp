@@ -22,7 +22,7 @@ const vector<shared_ptr<UniqueTransition>> transitions() {
     return vector<shared_ptr<UniqueTransition>>{t1};
 }
 
-const UniqueStateMachine<UniqueState, UniqueTransition> load() {
+const UniqueStateMachine load() {
     // simulate loading states and transitions concurrently from a database
     auto futureStates = async(launch::async, states);
     auto futureTransitions = async(launch::async, transitions);
@@ -35,15 +35,15 @@ const UniqueStateMachine<UniqueState, UniqueTransition> load() {
 
     states[0]->transitions.push_back(transitions[0]);
 
-   return UniqueStateMachine<UniqueState, UniqueTransition>(1, "Main", Args(), states.front());
+   return UniqueStateMachine(1, "Main", Args(), states.front());
 }
 
 int main(int argc, char* argv[]) {
     auto stateMachine = load();
 
-    cout << stateMachine.state->name << endl;
+    cout << static_cast<UniqueState*>(stateMachine.state.get())->name << endl;
 
-    // stateMachine.next(stateMachine.state->transitions.front()); 
+    stateMachine.next(stateMachine.state->transitions.front()); 
 
-    // cout << static_cast<Unique*>(stateMachine.state.get())->name << endl;
+    cout << static_cast<UniqueState*>(stateMachine.state.get())->name << endl;
 }
