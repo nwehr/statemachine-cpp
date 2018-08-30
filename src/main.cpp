@@ -41,9 +41,13 @@ const UniqueStateMachine load() {
 int main(int argc, char* argv[]) {
     auto sm = load();
 
-    cout << dynamic_pointer_cast<UniqueState>(sm.state)->name << endl;
+    if(auto state = dynamic_pointer_cast<UniqueState>(sm.state)) {
+        cout << state->name << endl;
+    }
 
     sm.next(sm.state->transitions.front()); 
 
-    cout << dynamic_pointer_cast<UniqueState>(sm.state)->name << endl;
+    if(auto state = dynamic_pointer_cast<UniqueState>(sm.state)) {
+        cout << state->name << endl;
+    }
 }
